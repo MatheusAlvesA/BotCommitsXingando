@@ -20,7 +20,8 @@ while True:
 		pass
 
 	diff = crawler.diffCommitsAnteriores(todos, anteriores)
-	anteriores = todos
+	if len(todos) > 0:
+		anteriores = todos
 
 	novos = crawler.removerDadosDesnecessarios( diff )
 	if len(novos) > 0:
