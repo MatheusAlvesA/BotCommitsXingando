@@ -18,13 +18,17 @@ def buscarCommits(query):
 
 		query -- A palavra que deve ser usada na busca
 	'''
+	hoje = datetime.datetime.now().strftime("%Y-%m-%d")
 
 	acumulado = []
 	
 	for palavra in query:
 		acumulado = acumulado + requests.get(
-									"https://api.github.com/search/commits?q="+palavra+"+committer-date:2019-06-07..2019-06-07&sort=committer-date",
-									headers={'Accept': 'application/vnd.github.cloak-preview'}
+									"https://api.github.com/search/commits?q="+palavra+"+committer-date:"+hoje+".."+hoje+"&sort=committer-date",
+									headers={
+												'Accept': 'application/vnd.github.cloak-preview',
+												'Time-Zone': 'America/Sao_Paulo'
+											}
 								).json()['items']
 
 	return acumulado

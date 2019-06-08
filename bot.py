@@ -1,4 +1,6 @@
 import Libs.crawler as crawler
+import Libs.Twitter as Twitter
+
 import time
 
 def getListaPalavroes():
@@ -20,6 +22,14 @@ while True:
 	diff = crawler.diffCommitsAnteriores(todos, anteriores)
 	anteriores = todos
 
-	print(crawler.removerDadosDesnecessarios( diff ))
+	novos = crawler.removerDadosDesnecessarios( diff )
+	if len(novos) > 0:
+		print(list(map(lambda x: x['mensagem'], novos)))
+	else:
+		print('-')
 	print("\n")
+
+	for commit in novos:
+		Twitter.tweetar(Twitter.formatarEmTweet(commit))
+
 	time.sleep(61) # Execute essa operação a cada um minuto + 1 segundo
